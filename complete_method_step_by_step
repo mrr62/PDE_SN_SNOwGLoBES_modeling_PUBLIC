@@ -1,0 +1,24 @@
+step by step walkthorugh of how to create PDE event files through SNOwGLoBES from local energy and luminosity data 
+1. Organize initial data
+    1a) if raw data is available, separate it into nu_e, nu_ebar, and nu_x files, each with a time and value (may have to separate into luminosity and energy files per flavor)
+    1b) if only graphs are available, use webplotdigitzer to pick out values (this will introduce a small amount of error, however if you are careful it should be fine) --> end up with a table of time values with luminosity values and time values with energy values for each flavor (nu_e, nu_ebar_ nu_x)
+
+2. interpolate each file and combine the luminosity and energy files such that each flavor has only one file consisting of time (ms), energy (MeV), luminosity (10^51 erg/s) using interpolation_station code in local_code_data_reformatting
+!! IMPORTANT !! you must make sure that the start and end times are the same across flavors, so that the interpolated time bin width is consistent across flavors (necessary for step 3) 
+
+3. use three output files from interpolation_station as input for reformatted_lum_energy_data_ALL_flavors code (also found in local code directory) to output one single file that has been reformatted into a SNOwGLoBES compatible .dat file containing all flavors luminosity and energy
+    3a) run this function twice: one to separate by time bins (includes time bin width), one to simply put in the order SNOwGLoBES expects ; this will allow for the normalization of non-uniform time bins later in SNOwGLoBES when calcualting event rate per bin :)  
+--> SNOwGLoBES format: [number alpha_nue alpha_nuebar alpha_nux Eavg_nue Eavgy_nuebar Eavg_nux lum_nue lum_nuebar lum_nux] (number refers to either integer or bin time start; see above) 
+
+4. import both the pinched input files (Integer and time bins) into snowglobes. If accessing snowglobes on the cluster, use this command to export the files in: scp "/Users/your/local/file/path/FILENAME.dat" cluster.web.address:/home/your/destination/path/snowglobes ; i.e. scp [local file location] [new file location you're moving it to] 
+
+5. leave the time bin organized input in the main snowglobes directory (this will act as a reference/dictionary to match the appropriate fluence values to the appropriate time values once they have been run through snowglobes) and move the integer organized input file to the fluxes directory (snowglobes/fluxes) 
+    5a) rename the moved integer input file to "pinched_info.dat" to ensure compatibility with the SNOwGLoBES program pinced.cc 
+       --> you can also modify the pinched.cc code starting on line 86 that defines the infile, switching it from infile.open("pinched_info.dat"); ... to infile.open("CHOSEN FILE NAME"); ..., however I would recommend not modifying original SNOwGLoBES code unless you are confident that you have accounted for each necessary instance in the proper way. 
+
+6. once the input file has been appropriately renamed, run the pincehd.cc code in terminal through the command ./pinched 
+NOTE: if the variable OUTFLUXDIR is not set, the program will either output flux files into the working directory, or potentially not output the files at all, instead leaving a message that you need to set an OUTFLUXDIR. To set OUTFLUXDIR temporarily, you must simply use the "export" command: "export your/file/path/here". This allows you to change the OUTFLUXDIR when you run different data through, although you must also remember to reset it 
+
+7. Once all original input files have been run through pinched.cc, use the resulting pinched output files as input for the main SNOwGLoBES analysis function, supernova.pl. Supernova.pl is designed to work with one input file at a time, so you can use the run_all_SN_pinched_*.sh shell script to run all pinched files through supernova.pl with one command: "./run_all_SN_pinched_*.dat" (replace the * with either water or argon, or any other detector material as long as the shell script for it exists) 
+    7a) I have both an argon and water specific shell script in the snowglobes_time_binned_analysis, but you can create a script for any detector and material you want using the given scripts as a guideline. The onyl thing you need to edit is the 16th line calling supernova.pl to have your desired material and detector (a list can be found in the detector_configurations.dat file in the main snowglobes directory, but I have included it as a reference file in the snowglobes_time_binned_analysis folder for ease. NOTE: snowglobes list doesn't give material, you must know what material each detector uses, but I have included it in the detector_configurations.dat file added to snowglobes_time_binned_analysis folder) 
+
