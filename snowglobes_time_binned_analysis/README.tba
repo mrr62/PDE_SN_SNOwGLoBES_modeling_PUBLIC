@@ -1,1 +1,6 @@
-tbc
+-->use to take custom energy and luminosity data, run through ./pinched function --> supernova.pl function, then turn ouput files into one collection of event rates by time and flavor, and plot them
+
+-->includes all custom code and shell scripts used on the SNOwGLoBES interface needed to use the energy-binned original SNOwGLoBES functions for a time-binned analysis 
+    - all non-local code mentioned in method_step_by_step is contained in this folder 
+
+-->for a comprehensive step by step guide, including both local and SNOwGLoBES steps, find the method_step_by_step file in the main directory PDE_SN_SNOwGLoBES_modeling_PUBLIC
