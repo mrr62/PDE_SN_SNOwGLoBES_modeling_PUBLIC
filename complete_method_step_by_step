@@ -18,7 +18,7 @@ step by step walkthorugh of how to create PDE event files through SNOwGLoBES fro
     5a) rename the moved integer input file to "pinched_info.dat" to ensure compatibility with the SNOwGLoBES program pinced.cc 
        --> you can also modify the pinched.cc code starting on line 86 that defines the infile, switching it from infile.open("pinched_info.dat"); ... to infile.open("CHOSEN FILE NAME"); ..., however I would recommend not modifying original SNOwGLoBES code unless you are confident that you have accounted for each necessary instance in the proper way. 
 
-6. once the input file has been appropriately renamed, run the pincehd.cc code in terminal through the command ./pinched 
+6. once the input file has been appropriately renamed, run the pinched.cc code in terminal through the command ./pinched 
 NOTE: if the variable OUTFLUXDIR is not set, the program will either output flux files into the working directory, or potentially not output the files at all, instead leaving a message that you need to set an OUTFLUXDIR. To set OUTFLUXDIR temporarily, you must simply use the "export" command: "export your/file/path/here". This allows you to change the OUTFLUXDIR when you run different data through, although you must also remember to reset it 
 
 7. Once all original input files have been run through pinched.cc, use the resulting pinched output files as input for the main SNOwGLoBES analysis function, supernova.pl. Supernova.pl is designed to work with one input file at a time, so you can use the run_all_SN_pinched_*.sh shell script to run all pinched files through supernova.pl with one command: "./run_all_SN_pinched_*.dat" (replace the * with either water or argon, or any other detector material as long as the shell script for it exists) 
