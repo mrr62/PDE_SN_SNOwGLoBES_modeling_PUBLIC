@@ -1,5 +1,7 @@
 step by step walkthorugh of how to create PDE event files through SNOwGLoBES from local energy and luminosity data 
 
+SECTION ONE - LOCAL CODE
+================================================
 1. Organize initial data
     1a) if raw data is available, separate it into nu_e, nu_ebar, and nu_x files, each with a time and value (may have to separate into luminosity and energy files per flavor)
     1b) if only graphs are available, use webplotdigitzer to pick out values (this will introduce a small amount of error, however if you are careful it should be fine) --> end up with a table of time values with luminosity values and time values with energy values for each flavor (nu_e, nu_ebar_ nu_x)
@@ -11,6 +13,8 @@ step by step walkthorugh of how to create PDE event files through SNOwGLoBES fro
     3a) run this function twice: one to separate by time bins (includes time bin width), one to simply put in the order SNOwGLoBES expects ; this will allow for the normalization of non-uniform time bins later in SNOwGLoBES when calcualting event rate per bin :)  
 --> SNOwGLoBES format: [number alpha_nue alpha_nuebar alpha_nux Eavg_nue Eavgy_nuebar Eavg_nux lum_nue lum_nuebar lum_nux] (number refers to either integer or bin time start; see above) 
 
+SECTION TWO - SNOWGLOBES TIME FILE CREATION 
+==============================================
 4. import both the pinched input files (integer and time bins) into snowglobes. If accessing snowglobes on the cluster, use this command to export the files in: scp "/Users/your/local/file/path/FILENAME.dat" cluster.web.address:/home/your/destination/path/snowglobes ; i.e. scp [local file location] [new file location you're moving it to] 
     4a) Optionally, import a second copy of the integer-organized file (assumed to be PDE_pinched_input_INTEGER.dat) and leave in main SNOwGLoBES folder with the time-organized file for easy use in step 9 (you can skip this step, but you must then make sure the file paths are correct and work in separate repositories in time_int_dict.py)
 
@@ -35,3 +39,7 @@ NOTE: if the variable OUTFLUXDIR is not set, the program will either output flux
     10a) use the function normalized_flavor_event_rate_time_bins.py to get a normalized event count over time per flavor 
     10b) use the function normalized_total_event_rate_time_bins.py to get a normalized total event count per time bin (sum of all flavors)
 --> these will output one fully normalized file per function, creating a time-binned and analyzable data set for a PDE supernova:) use these files for plotting!! 
+
+SECTION THREE - PLOTS AND FIGURES
+================================================
+11. 
