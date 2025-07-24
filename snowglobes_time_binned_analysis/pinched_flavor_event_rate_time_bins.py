@@ -1,9 +1,9 @@
 import numpy as np
 
 # === File paths ===
-events_file = "flavor_events_per_bin_argon.txt"
-timing_file = "pinched_index_full_timing_map.txt"
-output_file = "time_binned_flavor_events_argon.txt"
+events_file = "/YOUR/FILE/PATH/flavor_events_per_bin_argon.txt"
+timing_file = "pinched_index_full_timing_map_S.txt"
+output_file = "YOUR/FILE/PATH/time_binned_flavor_events_argon.txt"
 
 # === Load timing map ===
 timing_data = np.loadtxt(timing_file, delimiter="\t", skiprows=1)
