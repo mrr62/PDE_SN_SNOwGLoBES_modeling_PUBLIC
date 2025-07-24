@@ -8,14 +8,18 @@ from collections import defaultdict
 #--> uses smeared_unweighted files as input, ignores non-smeared to avoid double counting events
 
 # Path to your event directory
-event_dir = "/YOUR/FILE/PATH/globes-3.2.18/snowglobes/out"
+#WATER 
+event_dir = "/YOUR/FILE/PATH/PDE_water_pinched"
+#ARGON 
+#event_dir = "YOUR/FILE/PATH/PDE_argon_pinched"
+
 os.chdir(event_dir)
 
-# Get all smeared unweighted files : choose between water and argon
-#ARGON code: 
-files = glob.glob("pinched_*_*_ar40kt_events_smeared_unweighted.dat")
+# Get all smeared unweighted files - choose between detector material: water, argon
 #WATER code: 
-#files = glob.glob("pinched_*_*_wc100kt30prct_events_smeared_unweighted.dat")
+files = glob.glob("pinched_*_wc100kt30prct_events_smeared_unweighted.dat")
+#ARGON code: 
+#files = glob.glob("pinched_*_*_ar40kt_events_smeared_unweighted.dat")
 
 # Separate event totals by integer index and flavor
 event_totals = defaultdict(lambda: {"nue": 0.0, "nuebar": 0.0, "nux": 0.0})
@@ -24,6 +28,8 @@ event_totals = defaultdict(lambda: {"nue": 0.0, "nuebar": 0.0, "nux": 0.0})
 def get_flavor(filename):
     if "_nue_" in filename:
         return "nue"
+    elif "_ibd_" in filename:
+        return "nuebar"  # IBD is from ν̄e interactions
     elif "_nuebar_" in filename:
         return "nuebar"
     elif any(flavor in filename for flavor in ["_numu_", "_numubar_", "_nutau_", "_nutaubar_"]):
@@ -60,7 +66,11 @@ for file in files:
         print(f"⚠️ Error processing {file}: {e}")
 
 # Sort output and write to file
-output_path = "YOUR/FILE/PATH/globes-3.2.18/snowglobes/flavor_events_per_bin_MATERIAL.txt"
+#WATER path
+output_path = "/YOUR/FILE/PATH/int_flavor_events_per_bin_water.txt"
+#ARGON path
+#output_path = "/YOUR/FILE/PATH/int_flavor_events_per_bin_argon.txt"
+
 with open(output_path, "w") as f:
     f.write("# bin_index, nue_events, nuebar_events, nux_events\n")
     for idx in sorted(event_totals):
