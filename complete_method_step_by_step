@@ -31,4 +31,7 @@ NOTE: if the variable OUTFLUXDIR is not set, the program will either output flux
 
 9. use time_int_dict.py (in snowglobes_time_binned_analysis folder) to create a map matching integer with bin start time, and using that to calculate bin width (in seconds). This is where the conversion from ms to s occurs, in order to accurately calculate events per bin. The start times/end times will be in ms to for a cleaner read of the graph, but the bin width, which is used to normalize the event count, will be in seconds to match the SNOwGLoBES output files which calculate event rate in seconds. 
 
-10. time_int_dict.py will output a .txt file named "pinched_index_full_timing_map_S.txt" in the working directory, which will then be used to change the integer-organized total event files output from step 8 (sum_pinched_events.py and flavor_sum_pinched_events.py function output) into a time-binned total event count in the form [] 
+10. time_int_dict.py will output a .txt file named "pinched_index_full_timing_map_S.txt" in the working directory, which will then be used to change the integer-organized total event files output from step 8 (sum_pinched_events.py and flavor_sum_pinched_events.py function output) into a time-binned total event count normalized by bin width and organized by start and end time of the bins
+    10a) use the function pinched_flavor_event_rate_time_bins.py to get a normalized event count over time per flavor 
+    10b) use the function pinched_total_event_rate_time_bins.py to get a normalized total event count per time bin (sum of all flavors)
+--> these will output one fully normalized file per function, creating a time-binned and analyzable data set for a PDE supernova:) use these files for plotting!! 
