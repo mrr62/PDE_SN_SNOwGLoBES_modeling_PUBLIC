@@ -29,10 +29,10 @@ for row in event_data:
 
     if idx in timing_dict:
         start_us, end_us, bin_width_s = timing_dict[idx]
-        # 🔑 Multiply each event count by bin width (in seconds)
-        nue_scaled = nue * bin_width_s
-        nuebar_scaled = nuebar * bin_width_s
-        nux_scaled = nux * bin_width_s
+        # convert ms to s 
+        nue_scaled = nue * 0.001
+        nuebar_scaled = nuebar * 0.001
+        nux_scaled = nux * 0.001
 
         results.append((start_us, end_us, nue_scaled, nuebar_scaled, nux_scaled))
     else:
