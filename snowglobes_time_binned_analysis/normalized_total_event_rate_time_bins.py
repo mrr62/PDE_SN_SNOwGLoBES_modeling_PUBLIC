@@ -26,8 +26,8 @@ for row in event_data:
 
     if idx in timing_dict:
         start_us, end_us, bin_width_s = timing_dict[idx]
-        # Multiply event count by bin width (in seconds)
-        normalized_event_count = event_count * bin_width_s
+        # convert ms to s 
+        normalized_event_count = event_count * 0.001
         results.append((start_us, end_us, normalized_event_count))
     else:
         print(f"⚠️ Warning: index {idx} not found in timing map")
