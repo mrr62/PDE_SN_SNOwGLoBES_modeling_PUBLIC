@@ -51,7 +51,8 @@ with open(output_file, "w") as f:
 
         Lv_nue     = interpolated["nue"]["Lv_erg"][i]
         Lv_nuebar  = interpolated["nuebar"]["Lv_erg"][i]
-        Lv_nux     = interpolated["mu_tau"]["Lv_erg"][i]
+        Lv_nux     = interpolated["mu_tau"]["Lv_erg"][i] / 4.0  # convert total νₓ to per-flavor (numu, numubar, nutau, and nutaubar) 
+
 
         #INTEGER - use for input files organized by integer
         #line = f"{i} {alpha_val:.3f} {alpha_val:.3f} {alpha_val:.3f} {Em_nue:.3f} {Em_nuebar:.3f} {Em_nux:.3f} {Lv_nue:.5e} {Lv_nuebar:.5e} {Lv_nux:.5e}\n"
